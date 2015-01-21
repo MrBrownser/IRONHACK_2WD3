@@ -17,9 +17,42 @@
 # “IS WORTH F***ING NOTHING”*.
 
 # * I am not responsible from Sinatra words. I mean, he said it in his way.
+
 require 'sinatra'
 require 'sinatra/reloader'
+require 'pp'
 
 set :port, 3003
 set :bind, '0.0.0.0'
+
+songs_list ||= []
+
+get  '/' do
+	pp songs_list
+end
+
+post '/songs/new' do
+	if songs_list < 10
+		songs_list << Song.new(params[:name], params[:artist])
+		redirect('/')
+	else
+		redirect('/enough')
+	end
+end
+
+get '/enough'
+	puts "IS WORTH F***ING NOTHING"
+end
+
+class Song
+	attr_accessor :name, :artist
+	def initialize(name, artist)
+		@name = name
+		@artist = artist
+	end
+end
+
+
+
+
 
