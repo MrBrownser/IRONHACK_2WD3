@@ -1,0 +1,24 @@
+<html>
+  <body>
+    <p>
+      Hi there! You have visited this place <%= @visits %> times.
+    </p>
+
+    <p>
+      What do you want to do today?
+    </p>
+
+    <form action="/save_errand" method="post">
+      <input name="name" />
+      <input type="submit" />
+    </form>
+
+    <% if @errands.any? %>
+      <ol>
+        <% @errands.each do |errand| %>
+          <li><%= errand %></li>
+        <% end %>
+      </ol>
+    <% end %>
+  </body>
+</html>

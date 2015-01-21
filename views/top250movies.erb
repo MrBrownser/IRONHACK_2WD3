@@ -1,0 +1,11 @@
+    <p>
+      Hi there! You asked to look for the top <%= @movies.length %> movies on IMDB, so...there are!!
+    </p>
+
+    <% if @movies.any? %>
+      <ol>
+        <% @movies.each do |movie| %>
+          <li><%= movie %></li>
+        <% end %>
+      </ol>
+    <% end %>

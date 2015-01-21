@@ -27,9 +27,29 @@ set :bind, '0.0.0.0'
 
 songs_list ||= []
 
+# ---------- CLASSES DEFINITION ----------
+
+class Song
+	attr_accessor :name, :artist
+	def initialize(name, artist)
+		@name = name
+		@artist = artist
+	end
+end
+
+def nicify_array(songs)
+	content = ""
+	content << "<ul>"
+	songs.each { |song|  content << "<li>" + song.name + " - " + song.artist + "</li>" }
+	content << "</ul>"
+	content
+end
+
+# ---------- ROUTES DEFINITION ----------
+
 get '/' do
 	if (songs_list.length > 0)
-		"#{Song.to_str(songs_list)}"
+		"#{nicify_array(songs_list)}"
 	else
 		"Song list is empty, do a POST request over curl!"
 	end
@@ -46,20 +66,4 @@ end
 
 get '/enough' do
 	puts "IS WORTH F***ING NOTHING"
-end
-
-class Song
-	attr_accessor :name, :artist
-	def initialize(name, artist)
-		@name = name
-		@artist = artist
-	end
-
-	def self.to_str(songs)
-		content = ""
-		content << "<ul>"
-		songs.each { |song|  content << "<li>" + song.name + " - " + song.artist + "</li>" }
-		content << "</ul>"
-		content
-	end
 end
