@@ -20,19 +20,23 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-require 'pp'
+require 'pry'
 
 set :port, 3003
 set :bind, '0.0.0.0'
 
 songs_list ||= []
 
-get  '/' do
-	pp songs_list
+get '/' do
+	if (songs_list.length > 0)
+		"#{Song.to_str(songs_list)}"
+	else
+		"Song list is empty, do a POST request over curl!"
+	end
 end
 
 post '/songs/new' do
-	if songs_list < 10
+	if songs_list.length < 10
 		songs_list << Song.new(params[:name], params[:artist])
 		redirect('/')
 	else
@@ -40,7 +44,7 @@ post '/songs/new' do
 	end
 end
 
-get '/enough'
+get '/enough' do
 	puts "IS WORTH F***ING NOTHING"
 end
 
@@ -50,9 +54,12 @@ class Song
 		@name = name
 		@artist = artist
 	end
+
+	def self.to_str(songs)
+		content = ""
+		content << "<ul>"
+		songs.each { |song|  content << "<li>" + song.name + " - " + song.artist + "</li>" }
+		content << "</ul>"
+		content
+	end
 end
-
-
-
-
-
