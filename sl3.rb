@@ -99,6 +99,11 @@ class CompleteIMDBSearcher
 		name = Imdb::Serie.new(show_id)
 	end
 
+	def get_movie_rating(movie_id)
+		movie = Imdb::Movie.new(movie_id)
+		result = { title: movie.title, rating: movie.rating }
+	end
+
 	def get_show_id(show_name)
 		id = Imdb::Search.new(show_name).movies.first.id
 	end
